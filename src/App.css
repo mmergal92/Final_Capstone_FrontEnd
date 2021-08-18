@@ -82,7 +82,7 @@ h4{
 }
 .existing-projects{
   float:left;
-  max-width: min-content;
+  max-width: 600px;
   align-items: left;
   border-radius: 15px;
   padding: 10px;
@@ -275,7 +275,7 @@ h4{
   /* align-items:center; */
 }
 .show-figmafiles img{
-  width: 25%;
+  width: 75%;
   /* justify-content: space-around; */
 }
 .figma-show_label{
