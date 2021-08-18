@@ -125,12 +125,13 @@ function CommentBox() {
                                     <td>{value.date}</td>  
                                     <td>{value.comment}</td>  
                                     <td className = "user"><img src={value.profilepic} alt="" />{value.username}</td>
-                                    <td>{localStorage.getItem('userfRealName') === value.username ? <button onClick={() => handleDelete(value)}>DELETE</button> : ''}{localStorage.getItem('userfRealName') === value.username ? <button onClick={onToggle}>EDIT</button> : ''} </td>
+                                    <td>{localStorage.getItem('userfRealName') === value.username ? <button onClick={() => handleDelete(value)}>DELETE</button> : ''}</td>
                                     </tr>
                         )})}
                     </tbody>
                     </table>
                 <br/>
+                {/* {localStorage.getItem('userfRealName') === value.username ? <button onClick={onToggle}>EDIT</button> : ''} */}
                 </div>
                 {/* {showContent && */}
                 <div className = "new-comments">
@@ -143,7 +144,7 @@ function CommentBox() {
                     </form>
                 </div>
                  {/* } */}
-                {showEdit &&
+                {/* {showEdit &&
                 <div className = "edit-comments">
                 <h3>Edit your Comment:</h3>
                  <form className = "edit">
@@ -152,7 +153,7 @@ function CommentBox() {
                     <button onClick= {handleEdit}>Edit</button>
                  </form>
                  </div>
-                }
+                } */}
             </div>
         )
     }
