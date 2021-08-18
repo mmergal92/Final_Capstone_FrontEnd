@@ -81,6 +81,8 @@ h4{
   background-color: var(--third);
 }
 .existing-projects{
+  float:left;
+  max-width: min-content;
   align-items: left;
   border-radius: 15px;
   padding: 10px;

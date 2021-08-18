@@ -138,10 +138,11 @@ function ProjectBox() {
                     </tbody>
                     </table>
                 <br/>
-                </div>
                 <div className="figma">
                     < FigmaShowComponent />
                 </div> 
+                </div>
+                
                 {/* <div className = "new-projects"> */}
                 {/* <h3>Add a new project,<b> {localStorage.getItem('userfRealName')}</b>:</h3>
                 <form>
