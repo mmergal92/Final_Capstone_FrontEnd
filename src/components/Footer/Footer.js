@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -12,11 +13,15 @@ function Footer() {
           <a href ="https://www.instagram.com/pillsmergs/" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
         <div className ="center-footer">
-        <a href ="/about">About Us</a>
+        <Link to={`/about/`}>
+           <h6>About Us</h6>
+          </Link>
           maria@itsproof.co
         </div>
         <div className ="right-footer">
-        <a href ="/form">Inquiry Form</a>
+        <Link to={`/form/`}>
+           <h6>Inquiry Form</h6>
+          </Link>
           Terms + Conditions
         </div>
       </section>
