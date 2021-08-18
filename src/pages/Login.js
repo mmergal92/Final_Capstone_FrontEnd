@@ -61,7 +61,7 @@ function SignIn(props) {
 
       {localStorage.getItem("sessionEmail") === null ? (
         <GoogleLogin
-          clientId="1079871584428-l65m8fmrboqneo4ap0l4752qcsf4jn6r.apps.googleusercontent.com"
+          clientId="376013862527-p2ee2jtu3onnm9rm5rrbcbqr2e0rskkp.apps.googleusercontent.com"
           onSuccess={responseGoogleSuccess}
           onFailure={responseGoogle}
         />
@@ -71,7 +71,7 @@ function SignIn(props) {
 
       {localStorage.getItem("sessionEmail") !== null ? (
         <GoogleLogout
-          clientId="1079871584428-l65m8fmrboqneo4ap0l4752qcsf4jn6r.apps.googleusercontent.com"
+          clientId="376013862527-p2ee2jtu3onnm9rm5rrbcbqr2e0rskkp.apps.googleusercontent.com"
           buttonText="Logout"
           onLogoutSuccess={logout}
         ></GoogleLogout>
