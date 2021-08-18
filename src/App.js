@@ -1,10 +1,12 @@
 import './App.css';
 import { Route, Switch } from 'react-router';
+// import { Link } from 'react-router-dom';
 
 // PAGES IMPOR
 import Home from './pages/Home';
 import About from './pages/About';
 import Client from './pages/Client';
+import AllClients from './pages/AllClients';
 import Header from './components/Header/Nav';
 import Footer from './components/Footer/Footer';
 import Admin from './pages/Admin';
@@ -28,9 +30,14 @@ function App() {
         <Route path="/About"> 
           <About/>
         </Route>
-        <Route path="/client"> 
+        <Route path="/client/" render={(routerProps)=><Client{...routerProps}/>} url={URL}>
           <Client />
         </Route>
+        {/* <Route
+          path="/client/:client"
+          render={(routerProps)=><Client{...routerProps}/>}
+          url={URL}>
+        </Route> */}
         <Route path="/admin"> 
           <Admin />
         </Route>

@@ -6,6 +6,12 @@ import ProgressTracker from './StatusTracker/progressTracker';
 
 function ProjectBox() {
 
+
+    var possnam  = (window.location.href).split("/client/").pop().replace('?', '');
+    console.log(possnam)
+    let nam = possnam
+    console.log(nam)
+
     const ProjectList = [{
         title: "online store 2",
         client: "Spirit Shop Again",
@@ -20,45 +26,42 @@ function ProjectBox() {
         version: 2, 
     }]
     //STATES
+    const [status, setStatus] = useState('');
+    const [chosen, setChosen]=useState('Not Started')
+    const changeChosen = (event) =>{
+        setChosen(event.target.value)
+    }
     const [newList, setNewList] = useState(ProjectList)
     const [title, setTitle] = useState('');
-    const [client, setClient] = useState('');
-    const [status, setStatus] = useState('');
-    const [onTrack, setOnTrack] = useState(true);
-    const [approved, setApproved] = useState(true);
-    const [Notes, setNotes] = useState('');
-    const [username, setUsername] = useState('');
-    const [change, setChange] = useState(true)
-    const tempArray = newList;
-    //HANDLES
-    const notesChange = (event) =>{
-        console.log("Adding text of comment")
-        setNotes(event.target.value)
-    };
     const titleChange = (event) =>{
         console.log("Adding text of title")
         setTitle(event.target.value)
     };
+    const [client, setClient] = useState(''); 
     const clientChange = (event) =>{
         console.log("Adding text of client")
         setClient(event.target.value)
     };
-    const statusChange = (event) =>{
-        console.log("Adding text of status")
-        setStatus(event.target.value)
+    const [dueDate, setDueDate] = useState('');
+    const dueDateChange = (event) =>{
+        console.log("Adding text of date")
+        setDueDate(event.target.value)
     };
-    // const onTrackChange = (event) =>{
-    //     console.log("Adding text on track")
-    //     setOnTrack(event.target.value)
-    // };
-    // const approvedChange = (event) =>{
-    //     console.log("Adding text of approved")
-    //     setApproved(event.target.value)
-    // };
+    const [Notes, setNotes] = useState('');
+    const notesChange = (event) =>{
+        console.log("Adding text of notes")
+        setNotes(event.target.value)
+    };
+    const [username, setUsername] = useState('');
     const usernameChange = (event) =>{
         console.log("Adding text of username")
         setUsername(event.target.value)
     };
+    const [change, setChange] = useState(true)
+    const tempArray = newList;
+    //HANDLES
+   
+    
     const handleDelete= async(value)=>{
         const URL = "https://proof-backend.herokuapp.com/" + "projects/"
         console.log(URL)
@@ -77,8 +80,9 @@ function ProjectBox() {
         // console.log(data.id)
     }
     const handleSubmit = (response) =>{
+        response.preventDefault()
         console.log(response)
-        const postURL = "https://proof-backend.herokuapp.com/" + "projects/" 
+        const postURL = "https://proof-backend.herokuapp.com/" + "projects/"
         console.log(postURL)
         fetch (postURL, {
             method: 'POST',
@@ -88,10 +92,10 @@ function ProjectBox() {
             },
             body: JSON.stringify ({
                 title: title,
-                client: client,
-                status: status,
+                client: nam,
+                status: chosen,
                 dateUploaded: new Date(Date.now()).toLocaleString(),
-                username: username,
+                username: localStorage.getItem('userfRealName'),
                 Notes: Notes,
             })
         })
@@ -114,10 +118,8 @@ function ProjectBox() {
                     <thead>
                     <tr>
                         <th>Title</th>
-                        <th>client</th>
-                        <th>status</th>
-                        <th>dateUploaded</th>
-                        <th>username</th>
+                        <th>Status</th>
+                        <th>Username</th>
                         <th>Notes</th>
                         <th>Action</th>
                         </tr>
@@ -126,21 +128,22 @@ function ProjectBox() {
                         {newList.map((value, index) => {
                         return(
                                 <tr key={index}> 
-                                    <td>{value.title}</td>  
-                                    <td>{value.client}</td>  
+                                    <td>{value.title}</td>
                                     <td>{value.status}</td>  
-                                    <td>{value.dateUploaded}</td> 
-                                    <td>{value.username}</td>  
+                                    <td className = "user"><img src={value.profilepic} alt="" />{value.username}</td> 
                                     <td>{value.Notes}</td> 
-                                    <td><button onClick={() => handleDelete(value)}>DELETE</button></td>
+                                    <td>{localStorage.getItem('userfRealName') === value.username ? <button onClick={() => handleDelete(value)}>DELETE</button> : ''}</td>
                                     </tr>
                         )})}
                     </tbody>
                     </table>
                 <br/>
                 </div>
-                <div className = "new-projects">
-                <h3>Add a new project,<b> {localStorage.getItem('userfRealName')}</b>:</h3>
+                <div className="figma">
+                    < FigmaShowComponent />
+                </div> 
+                {/* <div className = "new-projects"> */}
+                {/* <h3>Add a new project,<b> {localStorage.getItem('userfRealName')}</b>:</h3>
                 <form>
                     <label>
                         <br/>
@@ -149,28 +152,22 @@ function ProjectBox() {
                     Client:
                     <input type = "text" className = "project_input" value = {client} onChange = {clientChange} placeholder = "New Project client"/>
                     Status:
-                    <div>
-      <Dropdown
-        formLabel=""
-        buttonText="Update"
-        action="/client">
-        <Option selected value="STATUS" />
-        <Option value="Not Started" />
-        <Option value="In Progress" />
-        <Option value="Needs Review" />
-        <Option value="Under Review" />
-        <Option value="Done" />
-      </Dropdown>
-    </div>
-                    <input type="status" className = "project_input" value = {status} onChange = {statusChange} placeholder = "New Project status"/>
+                    <select value={chosen} onChange={changeChosen}>
+                        <option value="Not Started">Not Started</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Needs Review">Needs Review</option>
+                        <option value="Under Review">Under Review</option>
+                        <option value="Done">Done</option>
+                    </select>
+                    Project Notes:
                     <textarea className = "project_input" value = {Notes} onChange = {notesChange} placeholder = "New Project Notes"/>
                     </label><br/>
                     <button onClick= {handleSubmit}>Submit</button>
                 </form>
                 </div>
                 <div>
-                    < FigmaShowComponent />
-                </div>
+                    {/* < FigmaShowComponent /> */}
+                {/* </div>  */}
             </div>
         )
     }

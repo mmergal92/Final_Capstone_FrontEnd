@@ -3,6 +3,8 @@ import React, {useDebugValue, useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 
 function CommentBox() {
+
+
     const userCommentlist = [{
         date: "June 12, 2021",
         comment: "It will go up",
@@ -24,10 +26,6 @@ function CommentBox() {
         console.log("Adding text of comment")
         setComment(event.target.value)
     };
-    // const usernameChange = (event) =>{
-    //     console.log("Adding text of username")
-    //     setUsername(event.target.value)
-    // };
     const onToggle = (response) => {
         console.log(response)
         setShowEdit(!showEdit)
@@ -40,8 +38,34 @@ function CommentBox() {
         const data = await response.json()
         // console.log(data)
         setNewList(data);
-        // console.log(data.id)
     }
+    const handleSubmit = async(e) =>{
+        e.persist()
+        e.preventDefault()
+        console.log(e)
+        console.log(e.target.form.value)
+        const postURL = "https://proof-backend.herokuapp.com/" + "user/" 
+        console.log(postURL)
+        await fetch (postURL, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify ({
+                date: new Date(Date.now()).toLocaleString(),
+                comment: comment,
+                profilepic: localStorage.getItem('ProfileImg'),
+                username: localStorage.getItem('userfRealName')
+            })
+        })
+        console.log("Did this work for submit?")
+        // const tempArray = newList;
+        tempArray.push(e)
+        setNewList(tempArray)
+        setChange(!change);
+    }
+
     const handleDelete= async(value)=>{
         const URL = "https://proof-backend.herokuapp.com/" + "user/"
         console.log(value)
@@ -77,29 +101,6 @@ function CommentBox() {
         setChange(!change);
     }
 
-    const handleSubmit = async(response) =>{
-        console.log(response)
-        const postURL = "https://proof-backend.herokuapp.com/" + "user/" 
-        console.log(postURL)
-        await fetch (postURL, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify ({
-                date: new Date(Date.now()).toLocaleString(),
-                comment: comment,
-                profilepic: localStorage.getItem('ProfileImg'),
-                username: localStorage.getItem('userfRealName')
-            })
-        })
-        console.log("Did this work?")
-        // const tempArray = newList;
-        tempArray.push(response)
-        setNewList(tempArray)
-        setChange(!change);
-    }
     React.useEffect(()=>{
         getNewList();
     })
@@ -138,17 +139,17 @@ function CommentBox() {
                     <label>
                     <textarea className = "comment_input" value = {comment} onChange = {commentChange} placeholder = "New Comment"/>
                     </label><br/>
-                    <button onClick= {handleSubmit}>Submit</button>
+                    <button onClick={(e)=>{handleSubmit(e)}}>Submit</button>
                     </form>
                 </div>
                  {/* } */}
                 {showEdit &&
                 <div className = "edit-comments">
                 <h3>Edit your Comment:</h3>
-                 <form className = "edit" onSubmit={handleEdit}>
+                 <form className = "edit">
                     <textarea className = "edit-input" value = {comment} onChange = {commentChange} placeholder = "Edit Comment"/>
                     <br/>
-                    <input className="update" type = "submit" value="Update" />
+                    <button onClick= {handleEdit}>Edit</button>
                  </form>
                  </div>
                 }

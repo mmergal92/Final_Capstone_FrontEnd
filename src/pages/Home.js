@@ -13,15 +13,15 @@ function Home() {
     return (
         <div className = "home">
             <div className = "home-heading">
-            <h1>THIS IS PROOF</h1>
+                {localStorage.getItem('sessionEmail') ? `Hello, ${localStorage.getItem('userfRealName')}` : <a href="/login">Login here</a>}
             </div>
             <div className = "home-content">
-                {/* <Carousel /> */}
-                {localStorage.getItem('sessionEmail') ? `Welcome back, ${localStorage.getItem('userfRealName')}` : <div>
-                <p>We believe that when a woman of color wins, we all win. <br/>
-                In that spirit, we partner with WOC  entrepreneurs and allied brands to create dope shit that furthers the culture. Instead of a finite list of services, we have three disciplines we work with: User Experience, Brand, and Content. No limits.<br/>
+                <h2>THIS IS PROOF</h2>
+                <p>We believe that when women win, we all win. <br/>
+                In that spirit, we partner with WOC  entrepreneurs and allied brands to create dope shit that furthers the culture. Instead of a finite list of services, we have three disciplines we work with: <br/> User Experience <br/> Brand <br/> Content <br/><br/>
                 Have an idea, question, or just wanna chat? <a href= "/form">Hit us up!</a><br/>
-                Check out <a href= "https://www.nanankweti.com/" target="_blank" rel="noopener noreferrer">our most recent work</a></p> </div>}
+                Check out <a href= "https://www.nanankweti.com/" target="_blank" rel="noopener noreferrer">our most recent work</a></p>
+                {/* <Carousel /> */}
             </div>
         </div>
     )

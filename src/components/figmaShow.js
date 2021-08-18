@@ -15,7 +15,7 @@ function FigmaShowComponent () {
     const images = async() =>{
         const response = await fetch (GetURL)
         const data = await response.json()
-        console.log(data)
+        // console.log(data)
         setImageShow(data);
         // console.log(imageShow)
     }
@@ -31,13 +31,25 @@ function FigmaShowComponent () {
                     <label className="figma-show_label">Current Files</label>
                     <div className="figma-show_page">
                     <div className= "show-figmafiles">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th className="figma-showname">Name</th>
+                            <th>Image</th>
+                        </tr>
+                        </thead>
+                    <tbody>
                         {imageShow.map((value, index) =>{
                         return(
                             <tr key={index}>
-                                <td><img src={value.url} /></td>
+                                <td className="figma-showname">{value.name}</td>
+                                <td><img src={value.url} className="figma-showi"/></td>
                             </tr>
+
                         )
-                    })}
+                        })}
+                    </tbody>
+                    </table>
                     </div>
                     </div>
                 </div>
